@@ -1,0 +1,148 @@
+code for the web page
+PHP and HTML code
+<?php
+$insert = false;
+if(isset($_POST['name'])){
+
+
+$SERVER = "localhost";
+
+$username = "root";
+
+$password = "";
+
+$con = mysqli_connect($SERVER, $username, $password);
+
+if(!$con){
+    die("connection to this failed due to".mysqli_connect_error());
+}
+//echo "Success connecting to the databse";
+
+$name =$_POST['name'];
+$age =$_POST['age'];
+$gender =$_POST['gender'];
+$email =$_POST['email'];
+$phone =$_POST['phone'];
+$desc =$_POST['desc'];
+
+$sql =   " INSERT INTO `italy_trip`.`trip` ( `name`, `age`, `gender`, `email`, `phone`, `other`, `dt`) VALUES ('$name', '$age', '$gender', '$email', '$phone', '$desc', current_timestamp());";
+//echo $sql;
+
+if($con->query($sql) == true){
+    //echo "Sucessfully inserted";
+    $insert = true;
+}
+else{
+    echo"Error: $sql <br> $con->error";
+}
+$con->close();
+} 
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip to Italy! </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <img  class = "image" src="greece.jpg" alt="Italy">
+    <div class="container">
+        <h1>Welcome to the Travel Form(Italy) </h1>
+        <br>
+        <p>Enter you details for giving your Responses and for submitting your Form </p>
+        <br>
+        <?php
+        if($insert ==  true){
+        echo "<p class='Submit'>Thanks for submitting your form </p>";
+        }
+        ?>
+
+        <form action="index.php" method="post">
+            <input type="text" name="name" id="name" placeholder="Enter your name">
+            <input type="text" name="age" id="age" placeholder="Enter your age">
+            <input type="text" name="gender" id="gender" placeholder="Enter your gender">
+            <input type="text" name="email" id="email" placeholder="Enter your email">
+            <input type="text" name="phone" id="phone" placeholder="Enter your phone number">
+            <input type="text" name="exctiment level" id="excitment level" placeholder="Enter your excitment level out of 5 ">
+            <textarea name="desc" id="desc" cols="30" rows="10" placeholder="Enter any relevant information for this Trip"></textarea>
+            <button class="btn">Submit</button>
+            <br>
+            <button class="btn">Reset</button>
+         
+        </form>
+    
+    </div>
+  <script src="index.js"></script>
+
+
+</body>
+</html>
+
+
+CSS code
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Roboto Mono', monospace;
+}
+.container{
+    max-width: 80%;
+    margin: auto;
+   
+}
+.container h1 , p{
+text-align: center;
+
+font-size: 20px;
+}
+h1{
+    font-size: 25px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+input, textarea{
+   
+    width: 80%;
+    margin: 11px auto;
+    padding: 7px;
+    font-size: 24px;
+    border: 2px solid black;
+    border-radius: 6px;
+    outline: none;
+}
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.btn{
+    color: white;
+    background-color: rgb(161, 133, 187);
+    padding: 8px 10px;
+    font-size: 20px;
+    border: 2px solid white;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.image{
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+    opacity: 1.7;
+}
+
+p.submit{
+    font-size: 25px;
+    background-color:greenyellow;
+}
